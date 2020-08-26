@@ -45,7 +45,6 @@ public class TrelloClient {
         if (boardsResponse.isPresent()) {
             return Arrays.asList(boardsResponse.get());
         }
-
         return Arrays.asList();
     }
 }
