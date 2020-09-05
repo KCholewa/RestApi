@@ -1,7 +1,5 @@
 package com.crud.tasks.trello.client;
 import com.crud.tasks.domain.*;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +12,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
@@ -79,6 +76,7 @@ public class TrelloClientTest {
         );
 
         when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+
         //when
         CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
 
@@ -90,6 +88,7 @@ public class TrelloClientTest {
 
     @Test
     public void shouldReturnEmptyList() throws URISyntaxException {
+
         //given
         URI uri = new URI("http://test.com/members/test/boards?key=test&token=test&fields=name,id&lists=all");
         when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
