@@ -58,6 +58,7 @@ public class TrelloClientTest {
 
     @Test
     public void shouldCreateCard() throws URISyntaxException {
+
         //given
         TrelloCardDto trelloCardDto = new TrelloCardDto(
                 "Test task",
@@ -84,6 +85,7 @@ public class TrelloClientTest {
         assertEquals("1", newCard.getId());
         assertEquals("Test task", newCard.getName());
         assertEquals("http://test.com", newCard.getShortUrl());
+
     }
 
     @Test
