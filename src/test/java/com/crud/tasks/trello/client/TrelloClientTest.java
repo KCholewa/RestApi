@@ -27,6 +27,7 @@ public class TrelloClientTest {
     @Mock
     private TrelloConfig trelloConfig;
 
+
     @Before
     public void init() {
         when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
