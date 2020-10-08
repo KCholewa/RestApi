@@ -22,26 +22,35 @@ public class MapperTestSuite {
     TaskMapper taskMapper;
 
     @Test
-    public void testMapToBoardsAndMapToBoardsDto() {
+    public void testMapToBoards() {
         //given
-        List<TrelloListDto> trelloListDtos = new ArrayList<>();
-        trelloListDtos.add(new TrelloListDto("1", "test_list", false));
-
         List<TrelloBoardDto> trelloBoardDtoList = new ArrayList<>();
-        trelloBoardDtoList.add(new TrelloBoardDto("BoardId1", "BoardName1", trelloListDtos));
-
-        List<TrelloList> trelloLists = trelloMapper.mapToList(trelloListDtos);
-        List<TrelloBoard> trelloBoards = new ArrayList<>();
-        trelloBoards.add(new TrelloBoard("BoardId1", "BoardName1", trelloLists));
+        trelloBoardDtoList.add(new TrelloBoardDto("BoardId1", "BoardName1", new ArrayList<>()));
+        trelloBoardDtoList.add(new TrelloBoardDto("BoardId2", "BoardName2", new ArrayList<>()));
+        trelloBoardDtoList.add(new TrelloBoardDto("BoardId3", "BoardName3", new ArrayList<>()));
 
         //when
-        List<TrelloBoard> trelloBoardLists = trelloMapper.mapToBoards(trelloBoardDtoList);
-        List<TrelloBoardDto> trelloBoardDtoLists = trelloMapper.mapToBoardsDto(trelloBoards);
+        List<TrelloBoard> trelloBoards = trelloMapper.mapToBoards(trelloBoardDtoList);
+
         //then
-        assertEquals(1, trelloBoards.size());
-        assertEquals("BoardId1", trelloBoardLists.get(0).getId());
-        assertEquals(1, trelloBoardDtoList.size());
-        assertEquals("BoardId1", trelloBoardDtoLists.get(0).getId());
+        assertEquals(3, trelloBoards.size());
+        assertEquals("BoardId3", trelloBoards.get(2).getId());
+    }
+
+    @Test
+    public void testMapToBoardsDto() {
+        //given
+        List<TrelloBoard> trelloBoards = new ArrayList<>();
+        trelloBoards.add(new TrelloBoard("BoardId1", "BoardName1", new ArrayList<>()));
+        trelloBoards.add(new TrelloBoard("BoardId2", "BoardName2", new ArrayList<>()));
+        trelloBoards.add(new TrelloBoard("BoardId3", "BoardName3", new ArrayList<>()));
+
+        //when
+        List<TrelloBoardDto> trelloBoardDtoList = trelloMapper.mapToBoardsDto(trelloBoards);
+
+        //then
+        assertEquals(3, trelloBoardDtoList.size());
+        assertEquals("BoardId3", trelloBoardDtoList.get(2).getId());
     }
 
     @Test
@@ -139,4 +148,5 @@ public class MapperTestSuite {
         assertEquals("title1", taskDtoList.get(0).getTitle());
         assertEquals(3, taskDtoList.size());
     }
+
 }

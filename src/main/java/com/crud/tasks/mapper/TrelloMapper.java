@@ -10,27 +10,25 @@ public class TrelloMapper {
 
     public List<TrelloBoard> mapToBoards(final List<TrelloBoardDto> trelloBoardDto) {
         return trelloBoardDto.stream()
-                .map(trelloBoard ->
-                        new TrelloBoard(trelloBoard.getId(), trelloBoard.getName(), mapToList(trelloBoard.getLists()))
-                ).collect(toList());
+                .map(this::getTrelloBoard)
+                .collect(toList());
     }
 
     public List<TrelloList> mapToList(final List<TrelloListDto> trelloListDto) {
         return trelloListDto.stream()
-                .map(trelloList -> new TrelloList(trelloList.getId(), trelloList.getName(), trelloList.isClosed()))
+                .map(this::getTrelloList)
                 .collect(toList());
     }
 
     public List<TrelloBoardDto> mapToBoardsDto(final List<TrelloBoard> trelloBoards) {
         return trelloBoards.stream()
-                .map(trelloBoard ->
-                        new TrelloBoardDto(trelloBoard.getId(), trelloBoard.getName(), mapToListDto(trelloBoard.getLists())))
+                .map(this::getTrelloBoardDto)
                 .collect(toList());
     }
 
     public List<TrelloListDto> mapToListDto(final List<TrelloList> trelloLists) {
         return trelloLists.stream()
-                .map(trelloList -> new TrelloListDto(trelloList.getId(), trelloList.getName(), trelloList.isClosed()))
+                .map(this::getTrelloListDto)
                 .collect(toList());
     }
 
@@ -43,5 +41,22 @@ public class TrelloMapper {
         return new TrelloCard(trelloCardDto.getName(), trelloCardDto.getDescription(),
                 trelloCardDto.getPos(), trelloCardDto.getListId());
     }
+
+    public TrelloBoard getTrelloBoard(TrelloBoardDto trelloBoardDto) {
+        return new TrelloBoard(trelloBoardDto.getId(), trelloBoardDto.getName(), mapToList(trelloBoardDto.getLists()));
+    }
+
+    public TrelloList getTrelloList(TrelloListDto trelloListDto) {
+        return new TrelloList(trelloListDto.getId(), trelloListDto.getName(), trelloListDto.isClosed());
+    }
+
+    public TrelloBoardDto getTrelloBoardDto(TrelloBoard trelloBoard) {
+        return new TrelloBoardDto(trelloBoard.getId(), trelloBoard.getName(), mapToListDto(trelloBoard.getLists()));
+    }
+
+    public TrelloListDto getTrelloListDto(TrelloList trelloList) {
+        return new TrelloListDto(trelloList.getId(), trelloList.getName(), trelloList.isClosed());
+    }
+
 
 }
