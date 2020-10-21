@@ -32,7 +32,7 @@ public class TrelloControllerTest {
     private TrelloFacade trelloFacade;
 
     @Test
-    public void shouldFetchEmptyTrelloBoards() throws Exception {
+    public void shouldFetchTrelloBoards() throws Exception {
         //Given
         List<TrelloListDto> trelloLists = new ArrayList<>();
         trelloLists.add(new TrelloListDto("1", "Test List", false));
@@ -53,6 +53,21 @@ public class TrelloControllerTest {
                 .andExpect(jsonPath("$[0].lists[0].id", is("1")))
                 .andExpect(jsonPath("$[0].lists[0].name", is("Test List")))
                 .andExpect(jsonPath("$[0].lists[0].closed", is(false)));
+    }
+
+    @Test
+    public void shouldFetchEmptyTrelloBoards() throws Exception {
+        //Given
+        List<TrelloBoardDto> trelloBoards = new ArrayList<>();
+
+        when(trelloFacade.fetchTrelloBoards()).thenReturn(trelloBoards);
+
+        // When & Then
+        mockMvc.perform(get("/v1/trello/boards").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                //Trello board fields
+                .andExpect(jsonPath("$", hasSize(0)));
+
     }
 
     @Test

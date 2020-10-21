@@ -135,4 +135,16 @@ public class TaskControllerTest {
                 .andExpect(status().isOk());
 
     }
+
+    @Test(expected = Exception.class)
+    public void taskNotFoundExceptionTest() throws Exception {
+        //given
+       when(service.getTaskByID(1L)).thenReturn(Optional.empty());
+
+        //when & then
+       mockMvc.perform(get("/v1/tasks/1").contentType(MediaType.APPLICATION_JSON))
+               .andExpect(status().isNotFound());
+
+       verify(service, times(1)).getTaskByID(1L);
+    }
 }
