@@ -20,7 +20,7 @@ public class MapperTestSuite {
 
     @Autowired
     TaskMapper taskMapper;
-
+    
     @Test
     public void testMapToBoards() {
         //given
@@ -148,4 +148,5 @@ public class MapperTestSuite {
         assertEquals("title1", taskDtoList.get(0).getTitle());
         assertEquals(3, taskDtoList.size());
     }
+
 }
